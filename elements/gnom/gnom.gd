@@ -30,6 +30,8 @@ func _physics_process(delta: float) -> void:
 	if isAttack:
 		attack()
 		
+	move_and_collide(velocity)
+
 	update_animation(direction, is_run)
 
 func attack():
@@ -50,31 +52,42 @@ func update_animation(direction: Vector2, is_run: bool):
 		sprite.play("stay")
 		return
 
-	if abs(direction.x) > abs(direction.y):
-		if direction.x > 0:
-			sprite.flip_h = false
-			if is_run:
-				sprite.play("run_right")
-			else:
-				sprite.play("walk_right")
-		elif direction.x < 0:
-			sprite.flip_h = true
-			if is_run:
-				sprite.play("run_right")
-			else:
-				sprite.play("walk_right")
-	else:
-		if direction.y > 0:
-			if is_run:
-				sprite.play("run_down")
-			else:
-				sprite.play("walk_right")
-		else:
-			if is_run:
-				sprite.play("run_up")
-			else:
-				sprite.play("walk_up")
-	move_and_collide(velocity)
+	var normalized_dir = direction.normalized()
+	
+	# Определяем основные октанты (8 направлений)
+	var angle = rad_to_deg(atan2(normalized_dir.y, normalized_dir.x))
+	if angle < 0:
+		angle += 360
+	
+	# Маппинг углов на направления
+	var dir_map = {
+		0: "right", 45: "down_right", 90: "down", 135: "down_left",
+		180: "left", 225: "up_left", 270: "up", 315: "up_right"
+	}
+	
+	# Находим ближайшее направление (шаг 45 градусов)
+	var rounded_angle = int(round(angle / 45.0) * 45)
+	if rounded_angle >= 360:
+		rounded_angle = 0
+	
+	var direction_name = dir_map[rounded_angle]
+	
+	# Обработка переворота для левых направлений
+	var flip_h = direction_name in ["left", "up_left", "down_left"]
+	var anim_direction = direction_name
+	if flip_h:
+		match direction_name:
+			"left":
+				anim_direction = "right"
+			"up_left":
+				anim_direction = "up_right"
+			"down_left":
+				anim_direction = "down_right"
+	
+	# Проигрываем анимацию
+	var anim_name = ("run" if is_run else "walk") + "_" + anim_direction
+	sprite.flip_h = flip_h
+	sprite.play(anim_name)
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
