@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dv0v27ivv4utv"]
+
+[ext_resource type="PackedScene" uid="uid://bgk7wg4tfj7o5" path="res://elements/gnom/Gnom.tscn" id="1_l1rk1"]
+[ext_resource type="Script" uid="uid://cua8i5fq0ssyk" path="res://game/game.gd" id="1_vasa2"]
+[ext_resource type="PackedScene" uid="uid://ct6vqjnf0um5q" path="res://elements/slime/Slime.tscn" id="2_slime"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vasa2"]
+load_path = "res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.ctex"
+
+[node name="Game" type="Node2D" unique_id=744708610]
+script = ExtResource("1_vasa2")
+enemy_scene = ExtResource("2_slime")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=462068319]
+position = Vector2(768, 512)
+texture = SubResource("CompressedTexture2D_vasa2")
+
+[node name="Timer" type="Timer" parent="." unique_id=1009620476]
+wait_time = 2.0
+autostart = true
+
+[node name="Gnom" parent="." unique_id=2030102157 instance=ExtResource("1_l1rk1")]
+position = Vector2(758, 505)
+scale = Vector2(2.2399974, 2.2399974)
+
+[node name="Label" type="Label" parent="." unique_id=379940196]
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(2.2123172, 2.4615083)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

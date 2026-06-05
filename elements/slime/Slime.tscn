@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://ct6vqjnf0um5q"]
+
+[ext_resource type="Script" uid="uid://yureq5ddu6yf" path="res://elements/slime/slime.gd" id="1_iq1ds"]
+[ext_resource type="Texture2D" uid="uid://chdxnce7daidw" path="res://assets/Slime1_Walk_full.png" id="1_q2cr7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq1ds"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcycy"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52h5s"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4yuw"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7sw3"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thqy3"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tx5jl"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqy88"]
+atlas = ExtResource("1_q2cr7")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vm3dp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iq1ds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcycy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52h5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4yuw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7sw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thqy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tx5jl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqy88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tlopm"]
+radius = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pcycy"]
+bg_color = Color(0.7058824, 0.7058824, 0.7058824, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iq1ds"]
+bg_color = Color(0.76862746, 0, 0.13333334, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1389396133]
+script = ExtResource("1_iq1ds")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1279058442]
+sprite_frames = SubResource("SpriteFrames_vm3dp")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1905575709]
+shape = SubResource("CircleShape2D_tlopm")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=5747836]
+offset_left = -17.0
+offset_top = 10.0
+offset_right = 17.0
+offset_bottom = 14.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pcycy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_iq1ds")
+show_percentage = false
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=811290568]
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]
