@@ -12,7 +12,7 @@ config_version=5
 
 config/name="First try"
 run/main_scene="uid://dv0v27ivv4utv"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
@@ -25,6 +25,10 @@ window/stretch/mode="canvas_items"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[global_group]
+
+enemy=""
 
 [input]
 

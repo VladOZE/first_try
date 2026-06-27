@@ -5,7 +5,6 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_agdhc"]
 radius = 9.0
-height = 28.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6dhl4"]
 atlas = ExtResource("5_6vxy7")
@@ -250,7 +249,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1s57t")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 8.0
 }, {
@@ -273,7 +272,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lfipr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_down",
 "speed": 10.0
 }, {
@@ -296,7 +295,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1k837")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_down_right",
 "speed": 10.0
 }, {
@@ -319,7 +318,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o76tp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_right",
 "speed": 10.0
 }, {
@@ -342,7 +341,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cvagq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_up",
 "speed": 10.0
 }, {
@@ -365,7 +364,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_froa6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_up_right",
 "speed": 10.0
 }, {
@@ -382,7 +381,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ovu00")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stay",
 "speed": 4.0
 }, {
@@ -399,7 +398,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5glbj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_down",
 "speed": 5.0
 }, {
@@ -416,7 +415,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_58kdo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_down_right",
 "speed": 5.0
 }, {
@@ -433,7 +432,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ratar")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_right",
 "speed": 5.0
 }, {
@@ -450,7 +449,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7p4wm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_up",
 "speed": 5.0
 }, {
@@ -467,29 +466,59 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w0kp6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_up_right",
 "speed": 5.0
 }]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8rkvu"]
+bg_color = Color(0.7058824, 0.7058824, 0.7058824, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_854uu"]
+bg_color = Color(0.03529412, 0.7490196, 0.19607843, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rkvu"]
 radius = 1.4526135
 height = 2.905227
 
 [node name="Gnom" type="CharacterBody2D" unique_id=93163545]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_8rkvu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1525633418]
-position = Vector2(0, 4)
+position = Vector2(0, 3)
 scale = Vector2(1.1199989, 1)
 shape = SubResource("CapsuleShape2D_agdhc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=370403421]
 sprite_frames = SubResource("SpriteFrames_ovu00")
-animation = &"run_down_right"
-frame_progress = 0.65311426
+animation = &"stay"
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1748395298]
+offset_left = -17.0
+offset_top = 18.0
+offset_right = 17.0
+offset_bottom = 22.0
+theme_override_styles/background = SubResource("StyleBoxFlat_8rkvu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_854uu")
+max_value = 10.0
+step = 1.0
+show_percentage = false
 
 [node name="Area2D" type="Area2D" parent="." unique_id=635763584]
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=244409994]
 position = Vector2(0, 4)

@@ -1,19 +1,25 @@
 extends CharacterBody2D
 
-
 @onready var sprite = $AnimatedSprite2D
+@onready var health_bar = $HealthBar
+@onready var attack_area_shape = $Area2D/CollisionShape2D
 
 var enemies = []
-const SPEED = 200.0
-const RUN_SPEED = 300.0
+@export var base_speed := 200.0
+@export var base_run_speed := 300.0
+@export var max_health := 10
+@export var attack_range_scale := Vector2(12.3914585, 13.869791)
 
-
+var health
 var is_attacking = false
 var last_direction = Vector2.DOWN
 
-func _ready() -> void:
-	pass
-	
+func _ready():
+	health = max_health
+	health_bar.max_value = max_health
+	health_bar.value = health
+	attack_area_shape.scale = attack_range_scale
+
 func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector(
 		"ui_left",
@@ -24,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	
 	var is_run = Input.is_key_pressed(KEY_SHIFT)
 	
-	velocity = direction * (RUN_SPEED if is_run else SPEED) * delta
+	velocity = direction * (base_run_speed if is_run else base_speed) * delta
 
 	var isAttack = Input.is_key_pressed(KEY_SPACE)
 	if isAttack:
@@ -34,6 +40,10 @@ func _physics_process(delta: float) -> void:
 
 	update_animation(direction, is_run)
 
+func die():
+	get_parent().game_over()
+	queue_free()
+	
 func attack():
 	if is_attacking:
 		return
@@ -41,9 +51,25 @@ func attack():
 	
 	sprite.stop()
 	sprite.play("attack")
-	
 
-	
+func take_damage(damage):
+	health -= damage
+	health_bar.value = health
+	if health <= 0:
+		die()
+
+func apply_upgrade_stats(speed_bonus: float, health_bonus: int, range_bonus: float):
+	base_speed += speed_bonus
+	base_run_speed += speed_bonus * 1.5
+	max_health += health_bonus
+	health = max_health
+	health_bar.max_value = max_health
+	health_bar.value = health
+	attack_range_scale += Vector2.ONE * range_bonus
+	if attack_area_shape != null:
+		attack_area_shape.scale = attack_range_scale
+		
+
 func update_animation(direction: Vector2, is_run: bool):
 	if sprite.animation.begins_with("attack") and sprite.is_playing():
 		return
