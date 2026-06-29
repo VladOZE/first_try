@@ -9,6 +9,18 @@
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vasa2"]
 load_path = "res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.ctex"
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(1536, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
+size = Vector2(1536, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
+size = Vector2(20, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(20, 1024)
+
 [node name="Game" type="Node2D" unique_id=744708610]
 script = ExtResource("1_vasa2")
 enemy_scene = ExtResource("2_slime")
@@ -21,6 +33,26 @@ visible = false
 [node name="Background" type="Sprite2D" parent="." unique_id=462068319]
 position = Vector2(768, 512)
 texture = SubResource("CompressedTexture2D_vasa2")
+
+[node name="MapBounds" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="TopWall" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(768, -10)
+shape = SubResource("RectangleShape2D_top")
+
+[node name="BottomWall" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(768, 1034)
+shape = SubResource("RectangleShape2D_bottom")
+
+[node name="LeftWall" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(-10, 512)
+shape = SubResource("RectangleShape2D_left")
+
+[node name="RightWall" type="CollisionShape2D" parent="MapBounds"]
+position = Vector2(1546, 512)
+shape = SubResource("RectangleShape2D_right")
 
 [node name="Timer" type="Timer" parent="." unique_id=1009620476]
 wait_time = 2.0

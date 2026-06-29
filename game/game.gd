@@ -1,5 +1,7 @@
 extends Node2D
 
+const MAP_SIZE := Vector2(1536, 1024)
+
 @export var enemy_scene: PackedScene
 
 const SPEED_UPGRADE_COSTS := [3, 5, 7, 10]
@@ -148,14 +150,11 @@ func _on_timer_timeout():
 	var enemy = enemy_scene.instantiate()
 	
 	enemy.global_position = Vector2(
-		randf_range(0, 1536),
-		randf_range(0, 1024)
+		randf_range(0, MAP_SIZE.x),
+		randf_range(0, MAP_SIZE.y)
 	)
 
-	enemy.gnom = gnom
-
 	add_child(enemy)
-	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	load_progress()

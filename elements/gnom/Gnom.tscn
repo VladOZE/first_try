@@ -487,13 +487,11 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rkvu"]
-radius = 1.4526135
-height = 2.905227
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 24.0
 
 [node name="Gnom" type="CharacterBody2D" unique_id=93163545]
 collision_layer = 2
-collision_mask = 0
 script = ExtResource("1_8rkvu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1525633418]
@@ -519,12 +517,10 @@ show_percentage = false
 [node name="Area2D" type="Area2D" parent="." unique_id=635763584]
 collision_layer = 0
 collision_mask = 4
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=244409994]
 position = Vector2(0, 4)
-scale = Vector2(12.3914585, 13.869791)
-shape = SubResource("CapsuleShape2D_8rkvu")
+shape = SubResource("CircleShape2D_attack")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
